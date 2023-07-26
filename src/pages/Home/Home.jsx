@@ -1,5 +1,7 @@
 import { stateData } from "../../DummyData/data-set-1";
 import { Tree } from "react-arborist";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import CabinIcon from "@mui/icons-material/Cabin";
 
 const Home = () => {
   return (
@@ -10,7 +12,7 @@ const Home = () => {
         width={600}
         height={1000}
         indent={24}
-        rowHeight={36}
+        rowHeight={45}
         paddingTop={30}
         paddingBottom={10}
         padding={25 /* sets both */}
@@ -22,15 +24,42 @@ const Home = () => {
 };
 
 function Node({ node, style, dragHandle }) {
-  /* This node instance can do many things. See the API reference. */
+  const nodeData = node.data;
+  const tree = node.tree;
+  const treeIsOpen = tree.isOpen(nodeData.id);
+
   return (
     <div style={style} ref={dragHandle} onClick={() => node.toggle()}>
-      {node.isLeaf ? "🍁" : ">"}{" "}
-      {node.data.state !== undefined
-        ? node.data.state
-        : node.data.city !== undefined
-        ? node.data.city
-        : node.data.village}
+      {node.isLeaf && (
+        <div className="cursor-pointer bg-slate-100 p-2">
+          {" "}
+          <CabinIcon /> {nodeData.village}
+        </div>
+      )}
+      {!node.isLeaf && (
+        <div>
+          {nodeData.state !== undefined && (
+            <div className="cursor-pointer bg-blue-100 p-2">
+              <span>
+                <KeyboardArrowRightIcon
+                  className={`${treeIsOpen ? "rotate-90" : ""}`}
+                />
+              </span>
+              {nodeData.state}
+            </div>
+          )}
+          {nodeData.state === undefined && (
+            <div className="cursor-pointer bg-slate-200 p-2">
+              <span>
+                <KeyboardArrowRightIcon
+                  className={`${treeIsOpen ? "rotate-90" : ""}`}
+                />
+              </span>{" "}
+              {nodeData.city}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

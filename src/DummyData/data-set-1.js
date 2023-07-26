@@ -31,41 +31,41 @@ export const stateData = [
     ],
   },
   {
-    id: 8,
+    id: "8",
     state: "Bihar",
     children: [
       {
-        id: 9,
+        id: "9",
         city: "Patna",
-        villages: [
+        children: [
           {
-            id: 10,
+            id: "10",
             village: "Fatuha",
           },
           {
-            id: 11,
+            id: "11",
             village: "Dulhinbazar",
           },
           {
-            id: 12,
+            id: "12",
             village: "Bihata",
           },
           {
-            id: 13,
+            id: "13",
             village: "Danapur",
           },
         ],
       },
       {
-        id: 14,
+        id: "14",
         city: "Gaya",
-        villages: [
+        children: [
           {
-            id: 15,
+            id: "15",
             village: "Amraha",
           },
           {
-            id: 16,
+            id: "16",
             village: "Belthu",
           },
         ],
