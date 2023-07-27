@@ -46,7 +46,7 @@ const SearchBar = ({ searchList = [], inputFieldFontSize = "1rem" }) => {
             ))}
 
           {filteredSearchList.length === 0 && (
-            <div className="w-full h-full flex justify-center items-center text-slate-400 font-semibold text-xl">
+            <div className="w-full h-full flex justify-center items-center text-slate-400 font-medium text-xl">
               No matching result
             </div>
           )}
