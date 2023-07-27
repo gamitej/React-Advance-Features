@@ -1,7 +1,7 @@
 import { Tree } from "react-arborist";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import CabinIcon from "@mui/icons-material/Cabin";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useLayoutEffect } from "react";
 
 const TreeView = ({ stateData, villType }) => {
   const [data, setData] = useState(stateData || []);
@@ -9,9 +9,9 @@ const TreeView = ({ stateData, villType }) => {
   const filterData = useMemo(() => {
     return stateData.map((item) => {
       const newChildren = item.children.map((city) => {
-        const filteredVillages = city.children.filter(
-          ({ type }) => villType[type] === true
-        );
+        const filteredVillages = city.children.filter(({ type }) => {
+          if (type in villType && villType[type]) return true;
+        });
         return { ...city, children: filteredVillages };
       });
       return { ...item, children: newChildren };
@@ -23,9 +23,9 @@ const TreeView = ({ stateData, villType }) => {
   }, [filterData]);
 
   return (
-    <div className="">
+    <div className="" key={villType}>
       <Tree
-        initialData={data}
+        data={data}
         openByDefault={false}
         width={"100%"}
         height={1000}
@@ -59,6 +59,7 @@ function Node({ node, style, dragHandle }) {
       )}
       {!node.isLeaf && (
         <div>
+          {/* ======== STATE  ======== */}
           {nodeData.state !== undefined && (
             <div className="cursor-pointer bg-blue-100 p-2">
               <span>
@@ -69,14 +70,20 @@ function Node({ node, style, dragHandle }) {
               {nodeData.state}
             </div>
           )}
+          {/* ======== CITY  ======== */}
           {nodeData.state === undefined && (
-            <div className="cursor-pointer bg-slate-200 p-2">
-              <span>
-                <KeyboardArrowRightIcon
-                  className={`${treeIsOpen ? "rotate-90" : ""}`}
-                />
-              </span>{" "}
-              {nodeData.city}
+            <div className="w-full flex gap-x-2 items-center  cursor-pointer bg-slate-200 p-2">
+              <div>
+                <span>
+                  <KeyboardArrowRightIcon
+                    className={`${treeIsOpen ? "rotate-90" : ""}`}
+                  />
+                </span>{" "}
+                {nodeData.city}
+              </div>
+              <p className=" bg-purple-500 w-[1.5rem] rounded-full text-center text-white text-[14px]">
+                {nodeData.children.length}
+              </p>
             </div>
           )}
         </div>
