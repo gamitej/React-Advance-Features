@@ -1,18 +1,6 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 
-const arr = [
-  "amitej",
-  "bag",
-  "cat",
-  "dog",
-  "elephant",
-  "frog",
-  "girl",
-  "hello",
-  "irish",
-];
-
-const SearchBar = () => {
+const SearchBar = ({ searchList = [] }) => {
   const [inputValue, setInputValue] = useState("");
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
@@ -20,9 +8,14 @@ const SearchBar = () => {
     const value = e.target.value;
     setInputValue(value);
 
-    // Show the dropdown only if the input value is not empty
     setIsDropdownVisible(value !== "");
   };
+
+  const filteredSearchList = useMemo(() => {
+    return searchList?.filter((item) =>
+      item.toLowerCase().includes(inputValue.toLowerCase())
+    );
+  }, [inputValue]);
 
   return (
     <div className="relative z-[1000]">
@@ -37,14 +30,21 @@ const SearchBar = () => {
         <div
           className={`absolute top-[calc(100%+0.5rem)] p-2 w-[20rem] h-[13rem] overflow-auto shadow-sm border border-slate-300 rounded-xl mt-1 bg-white`}
         >
-          {arr.map((item, idx) => (
-            <React.Fragment key={idx}>
-              <div className="p-2">
-                <p>{item}</p>
-              </div>
-              {idx !== arr.length - 1 && <hr />}
-            </React.Fragment>
-          ))}
+          {filteredSearchList.length > 0 &&
+            filteredSearchList?.map((item, idx) => (
+              <React.Fragment key={idx}>
+                <div className="p-2">
+                  <p>{item}</p>
+                </div>
+                {idx !== filteredSearchList?.length - 1 && <hr />}
+              </React.Fragment>
+            ))}
+
+          {filteredSearchList.length === 0 && (
+            <div className="w-full h-full flex justify-center items-center text-slate-400 font-semibold text-xl">
+              No matching result
+            </div>
+          )}
         </div>
       )}
     </div>
