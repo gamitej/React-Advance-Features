@@ -1,15 +1,14 @@
-import { stateData } from "../../DummyData/data-set-1";
 import { Tree } from "react-arborist";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import CabinIcon from "@mui/icons-material/Cabin";
 
-const TreeView = () => {
+const TreeView = ({ stateData }) => {
   return (
     <div className="">
       <Tree
         initialData={stateData}
         openByDefault={false}
-        width={600}
+        width={"100%"}
         height={1000}
         indent={24}
         rowHeight={45}
@@ -31,8 +30,11 @@ function Node({ node, style, dragHandle }) {
   return (
     <div style={style} ref={dragHandle} onClick={() => node.toggle()}>
       {node.isLeaf && (
-        <div className="cursor-pointer bg-slate-100 p-2">
-          {" "}
+        <div
+          className={`cursor-pointer ${
+            nodeData.type === "poor" ? "bg-red-100" : "bg-green-100"
+          } p-2`}
+        >
           <CabinIcon /> {nodeData.village}
         </div>
       )}

@@ -10,8 +10,9 @@ export const stateData = [
           {
             id: "3",
             village: "Badwari",
+            type: "rich",
           },
-          { id: "4", village: "Rora" },
+          { id: "4", village: "Rora", type: "poor" },
         ],
       },
       {
@@ -21,10 +22,12 @@ export const stateData = [
           {
             id: "6",
             village: "Nayakpura",
+            type: "poor",
           },
           {
             id: "7",
             village: "Jigni",
+            type: "poor",
           },
         ],
       },
@@ -41,18 +44,22 @@ export const stateData = [
           {
             id: "10",
             village: "Fatuha",
+            type: "poor",
           },
           {
             id: "11",
             village: "Dulhinbazar",
+            type: "rich",
           },
           {
             id: "12",
             village: "Bihata",
+            type: "rich",
           },
           {
             id: "13",
             village: "Danapur",
+            type: "poor",
           },
         ],
       },
