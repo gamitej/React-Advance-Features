@@ -70,10 +70,12 @@ export const stateData = [
           {
             id: "15",
             village: "Amraha",
+            type: "poor",
           },
           {
             id: "16",
             village: "Belthu",
+            type: "rich",
           },
         ],
       },

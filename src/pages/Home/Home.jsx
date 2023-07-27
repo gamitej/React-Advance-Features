@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 // libs
 import { orderBy } from "lodash";
 // comp
@@ -20,10 +20,10 @@ const searchList = [
 ];
 
 const Home = () => {
-  const [type, setType] = useState({ poor: true, rich: true });
+  const [villType, setVillType] = useState({ poor: true, rich: true });
 
   const handleType = (val) => {
-    setType((prevState) => ({ ...prevState, [val]: !prevState[val] }));
+    setVillType((prevState) => ({ ...prevState, [val]: !prevState[val] }));
   };
 
   return (
@@ -31,7 +31,7 @@ const Home = () => {
       <div className="flex w-[18rem] justify-around  items-center h-[5rem]">
         <button
           className={`${
-            type.poor ? "bg-red-100" : "border-2 border-red-300 bg-white"
+            villType.poor ? "bg-red-100" : "border-2 border-red-300 bg-white"
           } p-2 w-[7rem] rounded-md h-[3rem]`}
           onClick={() => handleType("poor")}
         >
@@ -39,7 +39,9 @@ const Home = () => {
         </button>
         <button
           className={`${
-            type.rich ? "bg-green-100" : "border-2 border-green-300 bg-white"
+            villType.rich
+              ? "bg-green-100"
+              : "border-2 border-green-300 bg-white"
           } p-2 w-[7rem] rounded-md h-[3rem]`}
           onClick={() => handleType("rich")}
         >
@@ -47,8 +49,7 @@ const Home = () => {
         </button>
       </div>
 
-      {/* <SearchBar searchList={searchList} /> */}
-      <TreeView stateData={stateData} />
+      <TreeView stateData={stateData} villType={villType} />
     </div>
   );
 };

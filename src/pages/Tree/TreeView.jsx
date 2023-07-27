@@ -1,12 +1,31 @@
 import { Tree } from "react-arborist";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import CabinIcon from "@mui/icons-material/Cabin";
+import { useEffect, useState, useMemo } from "react";
 
-const TreeView = ({ stateData }) => {
+const TreeView = ({ stateData, villType }) => {
+  const [data, setData] = useState(stateData || []);
+
+  const filterData = useMemo(() => {
+    return stateData.map((item) => {
+      const newChildren = item.children.map((city) => {
+        const filteredVillages = city.children.filter(
+          ({ type }) => villType[type] === true
+        );
+        return { ...city, children: filteredVillages };
+      });
+      return { ...item, children: newChildren };
+    });
+  }, [stateData, villType]);
+
+  useEffect(() => {
+    setData(filterData);
+  }, [filterData]);
+
   return (
     <div className="">
       <Tree
-        initialData={stateData}
+        initialData={data}
         openByDefault={false}
         width={"100%"}
         height={1000}
