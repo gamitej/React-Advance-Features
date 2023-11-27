@@ -22,7 +22,7 @@ const TreeView = ({ stateData, villType }) => {
   return (
     <div className="" key={villType}>
       <Tree
-        data={data}
+        data={filterData || []}
         openByDefault={false}
         width={"100%"}
         height={1000}

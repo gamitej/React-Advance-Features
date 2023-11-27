@@ -1,3 +1,6 @@
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import CabinIcon from "@mui/icons-material/Cabin";
+
 export default function Node({ node, style, dragHandle }) {
   const tree = node.tree;
   const nodeData = node.data;
