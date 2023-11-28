@@ -1,55 +1,34 @@
 import React, { useMemo, useState } from "react";
-// libs
-import { orderBy } from "lodash";
 // comp
 import TreeView from "../Tree/TreeView";
-import SearchBar from "../../component/Search/SearchBar";
 // data
+import Head from "../Tree/component/Head";
 import { stateData } from "../../DummyData/data-set-1";
-
-const searchList = [
-  "amitej",
-  "bag",
-  "cat",
-  "dog",
-  "elephant",
-  "frog",
-  "girl",
-  "hello",
-  "irish",
-];
+import { SearchStateData } from "../Tree/Data/func.js";
 
 const Home = () => {
+  const [searchText, setSearchText] = useState("");
   const [villType, setVillType] = useState({ poor: true, rich: true });
 
   const handleType = (val) => {
     setVillType((prevState) => ({ ...prevState, [val]: !prevState[val] }));
   };
 
+  const newSearchedData = useMemo(() => {
+    return SearchStateData({ stateData, searchText });
+  }, [stateData, searchText]);
+
+  /**
+   * JSX
+   */
   return (
     <div>
-      <div className="flex w-[18rem] justify-around  items-center h-[5rem]">
-        <button
-          className={`${
-            villType.poor ? "bg-red-100" : "border-2 border-red-300 bg-white"
-          } p-2 w-[7rem] rounded-md h-[3rem]`}
-          onClick={() => handleType("poor")}
-        >
-          poor
-        </button>
-        <button
-          className={`${
-            villType.rich
-              ? "bg-green-100"
-              : "border-2 border-green-300 bg-white"
-          } p-2 w-[7rem] rounded-md h-[3rem]`}
-          onClick={() => handleType("rich")}
-        >
-          rich
-        </button>
-      </div>
-
-      <TreeView stateData={stateData} villType={villType} />
+      <Head
+        villType={villType}
+        handleType={handleType}
+        setSearchText={setSearchText}
+      />
+      <TreeView stateData={newSearchedData} villType={villType} />
     </div>
   );
 };

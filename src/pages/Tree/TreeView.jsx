@@ -1,19 +1,21 @@
 import { useMemo } from "react";
 import { Tree } from "react-arborist";
 import Node from "./Node";
+import { FilteredStateData } from "./Data/func";
 
 const TreeView = ({ stateData, villType }) => {
   // =============== FILTER LOGIC ================
   const filterData = useMemo(() => {
-    return stateData.map((item) => {
-      const newChildren = item.children.map((city) => {
-        const filteredVillages = city.children.filter(({ type }) => {
-          if (type in villType && villType[type]) return true;
-        });
-        return { ...city, children: filteredVillages };
-      });
-      return { ...item, children: newChildren };
-    });
+    // return stateData.map((item) => {
+    //   const newChildren = item.children.map((city) => {
+    //     const filteredVillages = city.children.filter(({ type }) => {
+    //       if (type in villType && villType[type]) return true;
+    //     });
+    //     return { ...city, children: filteredVillages };
+    //   });
+    //   return { ...item, children: newChildren };
+    // });
+    return FilteredStateData({ stateData, villType });
   }, [stateData, villType]);
 
   /**

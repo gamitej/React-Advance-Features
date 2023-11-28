@@ -8,6 +8,17 @@ export const stateData = [
         city: "Gwalior",
         children: [
           {
+            id: "22",
+            city: "Bhopal",
+            children: [
+              {
+                id: "2222",
+                village: "AT",
+                type: "rich",
+              },
+            ],
+          },
+          {
             id: "3",
             village: "Badwari",
             type: "rich",
@@ -80,5 +91,10 @@ export const stateData = [
         ],
       },
     ],
+  },
+  {
+    id: "34344",
+    state: "Striker",
+    children: [{ id: "12344", type: "poor", village: "Rewa" }],
   },
 ];
