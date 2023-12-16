@@ -1,5 +1,6 @@
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import CabinIcon from "@mui/icons-material/Cabin";
+import { btnTypeCss } from "./Data";
 
 export default function Node({ node, style, dragHandle }) {
   const tree = node.tree;
@@ -25,18 +26,20 @@ export default function Node({ node, style, dragHandle }) {
         <div>
           {/* =============== STATE  =============== */}
           {nodeData.state !== undefined && (
-            <div className="cursor-pointer bg-blue-100 p-2">
+            <div className="cursor-pointer bg-blue-100 p-2 flex justify-between">
               <span>
                 <KeyboardArrowRightIcon
                   className={`${treeIsOpen ? "rotate-90" : ""}`}
                 />
+                {nodeData.state}
               </span>
-              {nodeData.state}
+
+              <BtnGroup counts={nodeData.count} />
             </div>
           )}
           {/* ================= CITY  =============== */}
           {nodeData.state === undefined && (
-            <div className="w-full flex gap-x-2 items-center  cursor-pointer bg-slate-200 p-2">
+            <div className="w-full flex justify-between gap-x-2 items-center  cursor-pointer bg-slate-200 p-2">
               <div>
                 <span>
                   <KeyboardArrowRightIcon
@@ -45,13 +48,24 @@ export default function Node({ node, style, dragHandle }) {
                 </span>{" "}
                 {nodeData.city}
               </div>
-              <p className=" bg-purple-500 w-[1.5rem] rounded-full text-center text-white text-[14px]">
-                {nodeData.children.length}
-              </p>
+
+              <BtnGroup counts={nodeData.count} />
             </div>
           )}
         </div>
       )}
+    </div>
+  );
+}
+
+function BtnGroup({ counts = {} }) {
+  return (
+    <div className="flex gap-2">
+      {Object.entries(counts).map(([name, value], idx) => (
+        <button key={idx} className={`rounded-md px-2 ${btnTypeCss[name]}`}>
+          {value}
+        </button>
+      ))}
     </div>
   );
 }

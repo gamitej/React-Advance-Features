@@ -1,5 +1,18 @@
 // ================= FILTER DATA START ==================
 
+const getTotalCountForChildren = (childrenList) => {
+  const newCount = {};
+
+  childrenList.map(({ count: countObj }) => {
+    Object.entries(countObj).forEach(([name, value]) => {
+      if (name in newCount) newCount[name] += value;
+      else newCount[name] = value;
+    });
+  });
+
+  return newCount;
+};
+
 export const FilteredStateData = (data) => {
   const { stateData = [], villType = {} } = data;
 
@@ -9,11 +22,31 @@ export const FilteredStateData = (data) => {
         // ==== IF CHILDREN ===
         if (item.children) {
           const newChildren = getFilteredData(item.children);
-          return { ...item, children: newChildren };
+
+          if (newChildren) {
+            const totalCountForParent = getTotalCountForChildren(newChildren);
+
+            if (Object.keys(totalCountForParent).length > 0)
+              return {
+                ...item,
+                children: newChildren,
+                count: totalCountForParent,
+              };
+
+            return null;
+          }
+
+          return null;
         }
         // ==== IF NOT CHILDREN ===
         else if (item.type in villType && villType[item.type]) {
-          return { ...item };
+          return {
+            ...item,
+            count: {
+              poor: item.type === "poor" ? 1 : 0,
+              rich: item.type === "rich" ? 1 : 0,
+            },
+          };
         }
         return null;
       })
@@ -38,15 +71,19 @@ export const SearchStateData = (data) => {
           const newChildren = getSearchText(item.children);
 
           const isState =
-            item?.state?.toLowerCase().includes(searchText.toLowerCase()) ||
+            item.state?.toLowerCase().includes(searchText.toLowerCase()) ||
             false;
 
           const isCity =
-            item?.city?.toLowerCase().includes(searchText.toLowerCase()) ||
+            item.city?.toLowerCase().includes(searchText.toLowerCase()) ||
             false;
 
-          if (isState || isCity || newChildren.length > 0)
-            return { ...item, children: newChildren };
+          if (isState || isCity || newChildren.length > 0) {
+            return {
+              ...item,
+              children: newChildren.length > 0 ? newChildren : item.children,
+            };
+          }
           return null;
         }
         // ====== IF NOT CHILDREN =====
@@ -65,5 +102,3 @@ export const SearchStateData = (data) => {
 };
 
 // ================= SEARCH LOGIC END ==================
-
-// return item.village.toLowerCase().includes(searchText.toLowerCase());

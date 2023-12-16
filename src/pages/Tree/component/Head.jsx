@@ -15,7 +15,29 @@ const Head = ({
    * JSX
    */
   return (
-    <div className="flex flex-col gap-3 p-3 mt-8">
+    <div className="flex items-center justify-between  p-3 mt-8">
+      {/*  TYPE BTN GROUPS */}
+      <div className="flex w-[16rem] justify-around  items-center h-[5rem]">
+        <button
+          className={`${
+            villType.poor ? "bg-red-200" : "border-2 border-red-400 bg-white"
+          } p-2 w-[7rem] rounded-md h-[3rem]`}
+          onClick={() => handleType("poor")}
+        >
+          poor
+        </button>
+        <button
+          className={`${
+            villType.rich
+              ? "bg-green-200"
+              : "border-2 border-green-400 bg-white"
+          } p-2 w-[7rem] rounded-md h-[3rem]`}
+          onClick={() => handleType("rich")}
+        >
+          rich
+        </button>
+      </div>
+
       {/*  SEARCH */}
       <div className="ml-[1rem]">
         <input
@@ -26,27 +48,6 @@ const Head = ({
           className="border border-black py-2 px-3 rounded-md"
           onChange={({ target }) => setSearchValue(target.value)}
         />
-      </div>
-      {/*  TYPE BTN GROUPS */}
-      <div className="flex w-[18rem] justify-around  items-center h-[5rem]">
-        <button
-          className={`${
-            villType.poor ? "bg-red-100" : "border-2 border-red-300 bg-white"
-          } p-2 w-[7rem] rounded-md h-[3rem]`}
-          onClick={() => handleType("poor")}
-        >
-          poor
-        </button>
-        <button
-          className={`${
-            villType.rich
-              ? "bg-green-100"
-              : "border-2 border-green-300 bg-white"
-          } p-2 w-[7rem] rounded-md h-[3rem]`}
-          onClick={() => handleType("rich")}
-        >
-          rich
-        </button>
       </div>
     </div>
   );

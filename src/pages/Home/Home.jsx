@@ -28,7 +28,11 @@ const Home = () => {
         handleType={handleType}
         setSearchText={setSearchText}
       />
-      <TreeView stateData={newSearchedData} villType={villType} />
+      <TreeView
+        villType={villType}
+        searchText={searchText}
+        stateData={newSearchedData}
+      />
     </div>
   );
 };
